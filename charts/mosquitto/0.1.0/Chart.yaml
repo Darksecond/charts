@@ -4,3 +4,4 @@ description: Eclipse Mosquitto is an open source message broker which implements
 type: application
 version: 0.1.0
 appVersion: 1.6.8
+icon: file://../logo.png

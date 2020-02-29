@@ -1,0 +1,10 @@
+nameOverride: ""
+fullnameOverride: ""
+
+persistence:
+  enabled: true
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  # existingClaim:

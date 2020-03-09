@@ -1,0 +1,8 @@
+apiVersion: v2
+name: thelounge
+description: The Lounge is a self-hosted web IRC client.
+type: application
+version: 0.1.0
+appVersion: 4.0.0
+icon: file://../logo.svg
+home: https://thelounge.chat

@@ -5,4 +5,9 @@ service:
   type: ClusterIP
   port: 80
 
+ingress:
+  enabled: true
+  host: chart-example.local
+  clusterIssuer: "letsencrypt-staging"
+
 resources: {}

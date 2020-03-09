@@ -1,0 +1,31 @@
+questions:
+  - variable: ingress.enabled
+    type: boolean
+    label: Expose app using Layer 7 Load Balancer
+    description: "Expose app using Layer 7 Load Balancer - ingress"
+    show_subquestion_if: true
+    default: true
+    group: "Services and Load Balancing"
+    subquestions:
+      - variable: ingress.host
+        type: hostname
+        required: true
+        label: Hostname
+        description: "Hostname to your app installation"
+      - variable: ingress.clusterIssuer
+        type: string
+        default: ""
+        label: Cluster Issuer
+        description: "Cluster-wide certificate issuer to use"
+  - variable: service.type
+    required: true
+    default: "ClusterIP"
+    description: "ChartMuseum Service Type"
+    type: enum
+    label: Service Type For ChartMuseum
+    group: "Services and Load Balancing"
+    show_if: "ingress.enabled=false"
+    options:
+      - "ClusterIP"
+      - "NodePort"
+      - "LoadBalancer"

@@ -32,3 +32,14 @@ spec:
           httpGet:
             port: http
             path: /
+        volumeMounts:
+          - name: data
+            mountPath: /var/opt/thelounge
+      volumes:
+      - name: data
+{{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "thelounge.fullname" .) }}
+{{- else }}
+        emptyDir: {}
+{{- end -}}

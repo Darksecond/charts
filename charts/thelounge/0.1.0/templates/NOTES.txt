@@ -1,0 +1,6 @@
+
+To add a user:
+
+kubectl exec -it -n {{ .Release.Namespace }} {{ include "thelounge.fullname" . }} thelounge add <username>
+
+It'll ask for a password and if you want to save logs. Then you should be able to login to the web app

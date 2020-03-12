@@ -17,29 +17,33 @@ questions:
   - variable: ingress.tls.enabled
     type: boolean
     show_if: "ingress.enabled=true"
-    show_subquestion_if: true
     default: true
     group: "Services and Load Balancing"
     label: enable TLS on the Layer 7 Load Balancer
     description: "Enable TLS using certificates on the Layer 7 Load Balancer - ingress"
-    subquestions:
-      - variable: ingress.tls.clusterIssuer
-        type: string
-        default: ""
-        label: Cert Manager Cluster Issuer
-        description: "Cluster-wide certificate issuer to use - leave empty to not use cert-manager"
-      - variable: ingress.tls.secretName
-        type: secret
-        label: TLS Secret Name
-        description: "Name of secret which contains the certificate - leave empty to autogenerate"
-        default: ""
+    
+  - variable: ingress.tls.clusterIssuer
+    type: string
+    default: ""
+    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"
+    label: Cert Manager Cluster Issuer
+    description: "Cluster-wide certificate issuer to use - leave empty to not use cert-manager"
+    group: "Services and Load Balancing"
+
+  - variable: ingress.tls.secretName
+    type: secret
+    label: TLS Secret Name
+    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"
+    description: "Name of secret which contains the certificate - leave empty to autogenerate"
+    default: ""
+    group: "Services and Load Balancing"
 
   - variable: service.type
     required: true
     default: "ClusterIP"
-    description: "ChartMuseum Service Type"
+    description: "Service Type"
     type: enum
-    label: Service Type For ChartMuseum
+    label: Service Type
     group: "Services and Load Balancing"
     show_if: "ingress.enabled=false"
     options:

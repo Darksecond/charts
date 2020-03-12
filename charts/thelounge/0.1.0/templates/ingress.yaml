@@ -6,16 +6,18 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "thelounge.labels" . | nindent 4 }}
-{{- if .Values.ingress.clusterIssuer }}
+{{- if .Values.ingress.tls.enabled }}
+{{- if .Values.ingress.tls.clusterIssuer }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.ingress.clusterIssuer | quote }}
-{{- end}}
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.clusterIssuer | quote }}
+{{- end }}
+{{- end }}
 spec:
-{{- if .Values.ingress.clusterIssuer }}
+{{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
         - {{ .Values.ingress.host | quote }}
-      secretName: {{ printf "%s-tls" $fullName }}
+      secretName: {{ include "thelounge.tlsSecretName" . }}
 {{- end }}
   rules:
     - host: {{ .Values.ingress.host | quote }}

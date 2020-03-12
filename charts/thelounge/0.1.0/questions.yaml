@@ -1,4 +1,5 @@
 questions:
+
   - variable: ingress.enabled
     type: boolean
     label: Expose app using Layer 7 Load Balancer
@@ -12,11 +13,27 @@ questions:
         required: true
         label: Hostname
         description: "Hostname to your app installation"
-      - variable: ingress.clusterIssuer
+      
+  - variable: ingress.tls.enabled
+    type: boolean
+    show_if: "ingress.enabled=true"
+    show_subquestion_if: true
+    default: true
+    group: "Services and Load Balancing"
+    label: enable TLS on the Layer 7 Load Balancer
+    description: "Enable TLS using certificates on the Layer 7 Load Balancer - ingress"
+    subquestions:
+      - variable: ingress.tls.clusterIssuer
         type: string
         default: ""
-        label: Cluster Issuer
-        description: "Cluster-wide certificate issuer to use"
+        label: Cert Manager Cluster Issuer
+        description: "Cluster-wide certificate issuer to use - leave empty to not use cert-manager"
+      - variable: ingress.tls.secretName
+        type: secret
+        label: TLS Secret Name
+        description: "Name of secret which contains the certificate - leave empty to autogenerate"
+        default: ""
+
   - variable: service.type
     required: true
     default: "ClusterIP"
@@ -29,6 +46,7 @@ questions:
       - "ClusterIP"
       - "NodePort"
       - "LoadBalancer"
+      
   - variable: persistence.enabled
     default: false
     description: "Enable persistence"

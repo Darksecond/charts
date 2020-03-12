@@ -8,7 +8,10 @@ service:
 ingress:
   enabled: true
   host: chart-example.local
-  clusterIssuer: "letsencrypt-staging"
+  tls:
+    enabled: true
+    clusterIssuer: "letsencrypt-staging"
+    secretName: "thelounge-tls"
 
 resources: {}
 

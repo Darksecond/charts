@@ -50,3 +50,10 @@ Selector labels
 app.kubernetes.io/name: {{ include "thelounge.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
+
+{{/*
+Create the name of the secret for the ingress to use
+*/}}
+{{- define "thelounge.tlsSecretName" -}}
+{{ default (printf "%s-tls" (include "thelounge.fullname" .)) .Values.ingress.tls.secretName }}
+{{- end -}}

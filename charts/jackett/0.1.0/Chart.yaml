@@ -1,0 +1,8 @@
+apiVersion: v2
+name: jackett
+description: API Support for your favorite torrent trackers.
+type: application
+version: 0.1.0
+appVersion: v0.14.418-ls60
+home: https://github.com/Jackett/Jackett
+icon: file://../logo.png

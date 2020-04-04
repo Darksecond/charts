@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "jackett.labels" . | nindent 4 }}
+  name: {{ include "jackett.fullname" . }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "jackett.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "jackett.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: "linuxserver/jackett:{{ .Chart.AppVersion }}"
+        name: jackett
+        ports:
+        - name: http
+          containerPort: 9117
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        livenessProbe:
+          initialDelaySeconds: 60
+          httpGet:
+            port: http
+            path: /
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: config
+{{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "jackett.fullname" .) }}
+{{- else }}
+        emptyDir: {}
+{{- end -}}

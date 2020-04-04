@@ -50,3 +50,10 @@ Selector labels
 app.kubernetes.io/name: {{ include "jackett.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
+
+{{/*
+Create the name of the secret for the ingress to use
+*/}}
+{{- define "jackett.tlsSecretName" -}}
+{{ default (printf "%s-tls" (include "jackett.fullname" .)) .Values.ingress.tls.secretName }}
+{{- end -}}

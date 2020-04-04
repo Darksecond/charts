@@ -26,13 +26,11 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
         livenessProbe:
           initialDelaySeconds: 60
-          httpGet:
-            port: http
-            path: /
+          tcpSocket:
+            port: gui
         readinessProbe:
-          httpGet:
-            port: http
-            path: /
+          tcpSocket:
+            port: gui
         volumeMounts:
         - name: config
           mountPath: /config

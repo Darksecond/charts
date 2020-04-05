@@ -40,12 +40,11 @@ spec:
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
         livenessProbe:
-          httpGet:
-            path: /admin.index.php
+          initialDelaySeconds: 60
+          tcpSocket:
             port: http
         readinessProbe:
-          httpGet:
-            path: /admin.index.php
+          tcpSocket:
             port: http
         volumeMounts:
         - name: config

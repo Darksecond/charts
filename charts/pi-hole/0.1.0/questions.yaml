@@ -16,15 +16,8 @@ questions:
   - variable: admin.password
     type: password
     default: "admin"
-    show_if: "admin.existingSecret==''"
     label: Admin password
-    description: "Admin password to use if existingSecret is not set"
-    group: "Application"
-  - variable: admin.existingSecret
-    type: secret
-    default: ""
-    label: Secret with password
-    description: "Use an existing secret for the password, leave empty to use password"
+    description: "Admin password to use"
     group: "Application"
 
   - variable: ingress.enabled

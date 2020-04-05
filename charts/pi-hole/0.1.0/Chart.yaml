@@ -1,0 +1,8 @@
+apiVersion: v2
+name: pi-hole
+description: A black hole for Internet advertisements
+type: application
+version: 0.1.0
+appVersion: 4.4
+icon: file://../logo.png
+home: https://pi-hole.net/

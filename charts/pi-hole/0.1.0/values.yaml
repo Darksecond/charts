@@ -1,0 +1,23 @@
+nameOverride: ""
+fullnameOverride: ""
+
+dns1: "8.8.8.8"
+dns2: "8.8.4.4"
+
+ingress:
+  enabled: true
+  host: chart-example.local
+  tls:
+    enabled: true
+    clusterIssuer: "letsencrypt-staging"
+    secretName: "pi-hole-tls"
+
+resources: {}
+
+persistence:
+  enabled: false
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  # existingClaim:

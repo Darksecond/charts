@@ -10,7 +10,7 @@ questions:
     label: Secondary DNS
     description: "Secondary DNS to use, or 'no' to disable"
     group: "Application"
-    default: "no"
+    default: ""
     type: string
 
   - variable: ingress.enabled

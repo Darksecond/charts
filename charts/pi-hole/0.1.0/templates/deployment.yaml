@@ -58,9 +58,9 @@ spec:
         - name: TZ
           value: Europe/Amsterdam
         - name: DNS1
-          value: {{ .Values.dns1 }}
+          value: "{{ .Values.dns1 }}"
         - name: DNS2
-          value: {{ .Values.dns2 }}
+          value: "{{ default .Values.dns2 "no" }}"
       volumes:
       - name: config
 {{- if .Values.persistence.enabled }}

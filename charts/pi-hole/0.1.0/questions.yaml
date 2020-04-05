@@ -4,11 +4,14 @@ questions:
     label: Primary DNS
     description: "Primary DNS to use"
     group: "Application"
+    type: string
+    default: "1.1.1.1"
   - variable: dns2
     label: Secondary DNS
     description: "Secondary DNS to use, or 'no' to disable"
     group: "Application"
-    default: "8.8.4.4"
+    default: "no"
+    type: string
 
   - variable: ingress.enabled
     type: boolean

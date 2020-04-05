@@ -5,7 +5,7 @@ dns1: "8.8.8.8"
 dns2: "8.8.4.4"
 
 ingress:
-  enabled: true
+  enabled: false
   host: chart-example.local
   tls:
     enabled: true

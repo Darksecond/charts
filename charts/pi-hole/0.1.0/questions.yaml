@@ -25,7 +25,7 @@ questions:
     label: Expose app using Layer 7 Load Balancer
     description: "Expose app using Layer 7 Load Balancer - ingress"
     show_subquestion_if: true
-    default: true
+    default: false
     group: "Services and Load Balancing"
     subquestions:
       - variable: ingress.host

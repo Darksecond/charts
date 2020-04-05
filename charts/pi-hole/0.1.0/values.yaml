@@ -21,3 +21,8 @@ persistence:
     - ReadWriteOnce
   size: 1Gi
   # existingClaim:
+
+admin:
+  password: "admin"
+  # existingSecret: ""
+  # secretKey: "password"

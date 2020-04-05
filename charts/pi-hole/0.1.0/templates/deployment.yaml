@@ -40,10 +40,11 @@ spec:
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
         livenessProbe:
-          initialDelaySeconds: 60
+          initialDelaySeconds: 120
           tcpSocket:
             port: http
         readinessProbe:
+          initialDelaySeconds: 60
           tcpSocket:
             port: http
         volumeMounts:
@@ -60,6 +61,11 @@ spec:
           value: "{{ .Values.dns1 }}"
         - name: DNS2
           value: "{{ default .Values.dns2 "no" }}"
+        - name: WEBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: {{ .Values.admin.secretKey | default "password" }}
+              name: {{ .Values.admin.existingSecret | default (include "pi-hole.fullname" .) }}
       volumes:
       - name: config
 {{- if .Values.persistence.enabled }}

@@ -8,6 +8,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: {{ include "pi-hole.fullname" . }}
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - port: 80
       targetPort: http
@@ -25,6 +26,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: {{ include "pi-hole.fullname" . }}
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - port: 53
       protocol: TCP
@@ -43,6 +45,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: {{ include "pi-hole.fullname" . }}
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - port: 53
       protocol: UDP

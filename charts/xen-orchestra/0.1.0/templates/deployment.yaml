@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "xen-orchestra.labels" . | nindent 4 }}
+  name: {{ include "xen-orchestra.fullname" . }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "xen-orchestra.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "xen-orchestra.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: "darksecond/xen-orchestra:{{ .Chart.AppVersion }}"
+        name: xen-orchestra
+        ports:
+        - containerPort: 8000
+          name: http
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        livenessProbe:
+          httpGet:
+            port: http
+            path: /
+        readinessProbe:
+          httpGet:
+            port: http
+            path: /
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: config
+            mountPath: /etc/xo-server/config.toml
+            subPath: config.toml
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "xen-orchestra.fullname" . }}
+      - name: data
+{{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "xen-orchestra.fullname" .) }}
+{{- else }}
+        emptyDir: {}
+{{- end -}}

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: xen-orchestra
+description: Xen management tool
+type: application
+version: 0.1.0
+appVersion: 1
+home: https://xen-orchestra.com
+icon: file://../logo.png

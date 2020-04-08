@@ -1,0 +1,26 @@
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  host: chart-example.local
+  tls:
+    enabled: true
+    clusterIssuer: "letsencrypt-staging"
+    secretName: "xoa-tls"
+
+resources: {}
+
+persistence:
+  enabled: false
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 2Gi
+  # existingClaim:
+
+redisUrl: redis://redis:6379/0

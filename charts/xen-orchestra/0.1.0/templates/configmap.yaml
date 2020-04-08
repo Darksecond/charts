@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "xen-orchestra.labels" . | nindent 4 }}
+  name: {{ include "xen-orchestra.fullname" . }}
+data:
+  config.toml: |-
+    datadir = '/data'
+    [http]
+    [http.cookies]
+    [[http.listen]]
+    port = 8000
+    [http.mounts]
+    [http.proxies]
+    [redis]
+    uri = '{{ .Values.redisUrl }}'
+    [remoteOptions]
+    [plugins]

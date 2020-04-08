@@ -29,4 +29,12 @@ persistence:
   size: 2Gi
   # existingClaim:
 
+backup:
+  enabled: true
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 2Gi
+  # existingClaim:
+
 redisUrl: redis://redis:6379/0

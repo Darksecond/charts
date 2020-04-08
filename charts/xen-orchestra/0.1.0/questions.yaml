@@ -81,3 +81,28 @@ questions:
       type: pvc
       label: Existing Persistent Volume Claim
       description: "If not empty, uses the specified existing PVC instead of creating new one"
+
+  - variable: backup.enabled
+    default: false
+    description: "Enable backup - mounted at /backup"
+    type: boolean
+    label: Backup volume enabled
+    show_subquestion_if: true
+    group: "Storage"
+    subquestions:
+    - variable: backup.size
+      default: "2Gi"
+      description: "Backup Volume Size"
+      type: string
+      label: Volume Size
+      required: true
+    - variable: backup.storageClass
+      default: ""
+      description: "If undefined or set to null, using the default storageClass. Defaults to null."
+      type: storageclass
+      label: Storage Class
+    - variable: backup.existingClaim
+      default: ""
+      type: pvc
+      label: Existing Persistent Volume Claim
+      description: "If not empty, uses the specified existing PVC instead of creating new one"

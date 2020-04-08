@@ -43,6 +43,10 @@ spec:
           - name: config
             mountPath: /etc/xo-server/config.toml
             subPath: config.toml
+{{- if .Values.backup.enabled }}
+          - name: backup
+            mountPath: /backup
+{{- end }}
       volumes:
       - name: config
         configMap:
@@ -54,3 +58,8 @@ spec:
 {{- else }}
         emptyDir: {}
 {{- end -}}
+{{- if .Values.backup.enabled }}
+      - name: backup
+        persistentVolumeClaim:
+          claimName: {{ include "xen-orchestra.backupClaim" . }}
+{{- end }}

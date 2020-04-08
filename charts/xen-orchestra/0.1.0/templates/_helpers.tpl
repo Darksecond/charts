@@ -57,3 +57,10 @@ Create the name of the secret for the ingress to use
 {{- define "xen-orchestra.tlsSecretName" -}}
 {{ default (printf "%s-tls" (include "xen-orchestra.fullname" .)) .Values.ingress.tls.secretName }}
 {{- end -}}
+
+{{/*
+Create the name of the secret for the ingress to use
+*/}}
+{{- define "xen-orchestra.backupClaim" -}}
+{{ default (printf "%s-backup" (include "xen-orchestra.fullname" .)) .Values.backup.existingClaim }}
+{{- end -}}

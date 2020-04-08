@@ -1,0 +1,19 @@
+{{- if and .Values.backup.enabled (not .Values.backup.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    {{- include "xen-orchestra.labels" . | nindent 4 }}
+  name: {{ include "xen-orchestra.fullname" . }}-backup
+spec:
+  accessModes:
+    {{- range .Values.backup.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.backup.size | quote }}
+  {{- if .Values.backup.storageClassName }}
+  storageClassName: {{ .Values.backup.storageClassName }}
+  {{- end }}
+{{- end -}}

@@ -16,6 +16,11 @@ spec:
       labels:
         {{- include "xen-orchestra.selectorLabels" . | nindent 8 }}
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
       containers:
       - image: "darksecond/xen-orchestra:{{ .Chart.AppVersion }}"
         name: xen-orchestra

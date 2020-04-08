@@ -30,7 +30,7 @@ persistence:
   # existingClaim:
 
 backup:
-  enabled: true
+  enabled: false
   # storageClassName: default
   accessModes:
     - ReadWriteOnce

@@ -4,3 +4,5 @@ description: Unifi Access Point controller
 type: application
 version: 0.1.0
 appVersion: 5.12.66
+home: https://hub.docker.com/r/jacobalberty/unifi/
+icon: file://../logo.png

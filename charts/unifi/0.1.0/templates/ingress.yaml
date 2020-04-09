@@ -8,6 +8,7 @@ metadata:
     {{- include "unifi.labels" . | nindent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    ingress.kubernetes.io/protocol: "https"
 {{- if .Values.ingress.tls.enabled }}
 {{- if .Values.ingress.tls.clusterIssuer }}
     cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.clusterIssuer | quote }}
@@ -26,6 +27,6 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: {{ $fullName }}
+              serviceName: {{ $fullName }}-tcp
               servicePort: 8443
 {{- end }}

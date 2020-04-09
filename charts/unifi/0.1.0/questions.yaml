@@ -1,0 +1,64 @@
+questions:
+
+  - variable: ingress.enabled
+    type: boolean
+    label: Expose app using Layer 7 Load Balancer
+    description: "Expose app using Layer 7 Load Balancer - ingress"
+    show_subquestion_if: true
+    default: false
+    group: "Services and Load Balancing"
+    subquestions:
+      - variable: ingress.host
+        type: hostname
+        required: true
+        label: Hostname
+        description: "Hostname to your app installation"
+      
+  - variable: ingress.tls.enabled
+    type: boolean
+    show_if: "ingress.enabled=true"
+    default: true
+    group: "Services and Load Balancing"
+    label: enable TLS on the Layer 7 Load Balancer
+    description: "Enable TLS using certificates on the Layer 7 Load Balancer - ingress"
+    
+  - variable: ingress.tls.clusterIssuer
+    type: string
+    default: ""
+    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"
+    label: Cert Manager Cluster Issuer
+    description: "Cluster-wide certificate issuer to use - leave empty to not use cert-manager"
+    group: "Services and Load Balancing"
+
+  - variable: ingress.tls.secretName
+    type: secret
+    label: TLS Secret Name
+    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"
+    description: "Name of secret which contains the certificate - leave empty to autogenerate"
+    default: ""
+    group: "Services and Load Balancing"
+      
+  - variable: persistence.enabled
+    default: false
+    description: "Enable persistence"
+    type: boolean
+    label: Persistence enabled
+    show_subquestion_if: true
+    group: "Storage"
+    subquestions:
+    - variable: persistence.size
+      default: "2Gi"
+      description: "Persistent Volume Size"
+      type: string
+      label: Volume Size
+      required: true
+    - variable: persistence.storageClass
+      default: ""
+      description: "If undefined or set to null, using the default storageClass. Defaults to null."
+      type: storageclass
+      label: Storage Class
+    - variable: persistence.existingClaim
+      default: ""
+      type: pvc
+      label: Existing Persistent Volume Claim
+      description: "If not empty, uses the specified existing PVC instead of creating new one"

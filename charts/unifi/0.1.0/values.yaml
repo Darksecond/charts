@@ -1,6 +1,8 @@
 nameOverride: ""
 fullnameOverride: ""
 
+gatewayConfig: ""
+
 ingress:
   enabled: false
   host: chart-example.local

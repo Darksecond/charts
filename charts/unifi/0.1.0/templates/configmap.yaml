@@ -1,0 +1,11 @@
+{{- if .Values.gatewayConfig -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  name: {{ include "unifi.fullname" . }}
+data:
+  config.gateway.json: |-
+    {{ .Values.gatewayConfig }}
+{{- end -}}

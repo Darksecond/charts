@@ -58,7 +58,17 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /unifi
+{{- if .Values.gatewayConfig }}
+        - name: config
+          subPath: config.gateway.json
+          mountPath: /unifi/data/sites/default/config.gateway.json
+{{- end }}
       volumes:
+{{ if .Values.gatewayConfig }}
+      - name: config
+        configMap:
+          name: {{ include "unifi.fullname" . }}
+{{- end }}
       - name: data
 {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:

@@ -1,5 +1,12 @@
 questions:
 
+  - variable: gatewayConfig
+    type: multiline
+    default: ""
+    group: "Configuration"
+    label: Gateway config JSON
+    description: "Contents for config.gateway.json"
+
   - variable: ingress.enabled
     type: boolean
     label: Expose app using Layer 7 Load Balancer

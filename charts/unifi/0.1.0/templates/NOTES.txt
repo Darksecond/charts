@@ -1,0 +1,1 @@
+You need to add `insecureSkipVerify = true` to your traefik configuration if you're using traefik as a ingress.

@@ -67,7 +67,7 @@ spec:
 {{ if .Values.gatewayConfig }}
       - name: config
         configMap:
-          name: {{ include "unifi.fullname" . }}
+          name: {{ .Values.gatewayConfig }}
 {{- end }}
       - name: data
 {{- if .Values.persistence.enabled }}

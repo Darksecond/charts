@@ -1,11 +1,11 @@
 questions:
 
   - variable: gatewayConfig
-    type: multiline
+    type: string
     default: ""
     group: "Configuration"
-    label: Gateway config JSON
-    description: "Contents for config.gateway.json"
+    label: Gateway Config
+    description: "ConfigMap which contains json for config.gateway.json"
 
   - variable: ingress.enabled
     type: boolean

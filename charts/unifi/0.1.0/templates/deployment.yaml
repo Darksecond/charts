@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "unifi.labels" . | nindent 4 }}
+  name: {{ include "unifi.fullname" . }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "unifi.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "unifi.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: "jacobalberty/unifi:{{ .Chart.AppVersion }}"
+        name: unifi
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8443
+          name: https
+        - containerPort: 3478
+          protocol: UDP
+          name: stun
+        - containerPort: 6789
+          name: speedtest
+        - containerPort: 10001
+          protocol: UDP
+          name: discovery
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        env:
+        - name: TZ
+          value: Europe/Amsterdam
+        - name: RUNAS_UID0
+          value: "false"
+        - name: UNIFI_UID
+          value: "999"
+        - name: UNIFI_GID
+          value: "999"
+        livenessProbe:
+          initialDelaySeconds: 120
+          httpGet:
+            path: /status
+            port: https
+            scheme: HTTPS
+        readinessProbe:
+          initialDelaySeconds: 15
+          httpGet:
+            path: /status
+            port: https
+            scheme: HTTPS
+        volumeMounts:
+        - name: data
+          mountPath: /unifi
+      volumes:
+      - name: data
+{{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "unifi.fullname" .) }}
+{{- else }}
+        emptyDir: {}
+{{- end -}}

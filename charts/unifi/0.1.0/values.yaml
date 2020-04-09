@@ -1,0 +1,27 @@
+nameOverride: ""
+fullnameOverride: ""
+
+ingress:
+  enabled: false
+  host: chart-example.local
+  tls:
+    enabled: true
+    clusterIssuer: "letsencrypt-staging"
+    secretName: "unifi-tls"
+
+
+resources:
+  requests:
+    memory: 800Mi
+    cpu: 100m
+  limits:
+    memory: 1Gi
+    cpu: 500m
+
+persistence:
+  enabled: false
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 2Gi
+  # existingClaim:

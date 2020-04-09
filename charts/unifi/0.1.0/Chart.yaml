@@ -1,0 +1,6 @@
+apiVersion: v2
+name: unifi
+description: Unifi Access Point controller
+type: application
+version: 0.1.0
+appVersion: 5.12.66

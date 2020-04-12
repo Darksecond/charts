@@ -16,6 +16,11 @@ spec:
       labels:
         {{- include "keycloak.selectorLabels" . | nindent 8 }}
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
       containers:
       - image: "jboss/keycloak:{{ .Chart.AppVersion }}"
         name: keycloak
@@ -35,6 +40,16 @@ spec:
         envFrom:
         - secretRef:
             name: {{ include "keycloak.fullname" . }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 300
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
         ports:
         - name: http
           containerPort: 8080

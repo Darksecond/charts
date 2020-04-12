@@ -1,7 +1,13 @@
 nameOverride: ""
 fullnameOverride: ""
 
-resources: {}
+resources:
+  requests:
+    cpu: 100m
+    memory: 500Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
 
 keycloak:
   username: admin

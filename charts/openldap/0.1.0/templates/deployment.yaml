@@ -28,6 +28,8 @@ spec:
           value: "{{ .Values.readOnlyUser.enabled }}"
         - name: LDAP_READONLY_USER_USERNAME
           value: "{{ .Values.readOnlyUser.username }}"
+        - name: LDAP_TLS
+          value: "false"
         envFrom:
         - secretRef:
             name: {{ include "openldap.fullname" . }}

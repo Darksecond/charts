@@ -16,11 +16,11 @@ spec:
       labels:
         {{- include "openldap.selectorLabels" . | nindent 8 }}
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1001
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #   fsGroup: 1001
       containers:
       - image: "osixia/openldap:{{ .Chart.AppVersion }}"
         name: openldap

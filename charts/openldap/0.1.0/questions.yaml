@@ -4,12 +4,14 @@ questions:
     group: "LDAP Configuration"
     required: true
     label: LDAP Domain
+    type: string
     description: "LDAP Domain to use - example.org"
 
   - variable: ldap.organisation
     group: "LDAP Configuration"
     required: true
     label: LDAP Organisation
+    type: string
     description: "LDAP Organisation to use - Example Inc."
 
   - variable: adminUser.password

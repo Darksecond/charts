@@ -1,0 +1,76 @@
+questions:
+
+  - variable: ldap.domain
+    group: "LDAP Configuration"
+    required: true
+    label: LDAP Domain
+    description: "LDAP Domain to use - example.org"
+
+  - variable: ldap.organisation
+    group: "LDAP Configuration"
+    required: true
+    label: LDAP Organisation
+    description: "LDAP Organisation to use - Example Inc."
+
+  - variable: adminUser.password
+    group: "User Configuration"
+    type: password
+    required: true
+    default: "admin"
+    label: Admin User Password
+    description: "Password for the admin user"
+
+  - variable: configUser.password
+    group: "User Configuration"
+    type: password
+    required: true
+    default: "config"
+    label: Config User Password
+    description: "Password for the config user"
+
+  - variable: readOnlyUser.enabled
+    group: "User Configuration"
+    default: false
+    type: boolean
+    show_subquestion_if: true
+    label: Enable Read Only User
+    description: Enable the read only user
+    subquestions:
+    - variable: readOnlyUser.username
+      type: string
+      required: true
+      default: "readonly"
+      label: Read Only User Username
+      description: "Username for the Read Only User"
+    - variable: readOnlyUser.password
+      type: password
+      required: true
+      default: "readonly"
+      label: Read Only User Password
+      description: "Password for the Read Only User"
+
+
+  - variable: persistence.enabled
+    default: false
+    description: "Enable persistence"
+    type: boolean
+    label: Persistence enabled
+    show_subquestion_if: true
+    group: "Storage"
+    subquestions:
+    - variable: persistence.size
+      default: "2Gi"
+      description: "Persistent Volume Size"
+      type: string
+      label: Volume Size
+      required: true
+    - variable: persistence.storageClass
+      default: ""
+      description: "If undefined or set to null, using the default storageClass. Defaults to null."
+      type: storageclass
+      label: Storage Class
+    - variable: persistence.existingClaim
+      default: ""
+      type: pvc
+      label: Existing Persistent Volume Claim
+      description: "If not empty, uses the specified existing PVC instead of creating new one"

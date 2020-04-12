@@ -4,3 +4,5 @@ description: An open source identity and access management solution
 type: application
 version: 0.1.0
 appVersion: 9.0.2
+icon: file://../logo.png
+home: https://www.keycloak.org/

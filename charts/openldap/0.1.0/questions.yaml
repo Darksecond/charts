@@ -19,7 +19,7 @@ questions:
     type: password
     required: true
     default: "admin"
-    label: Admin User Password
+    label: Admin Password
     description: "Password for the admin user"
 
   - variable: configUser.password
@@ -27,7 +27,7 @@ questions:
     type: password
     required: true
     default: "config"
-    label: Config User Password
+    label: Config Password
     description: "Password for the config user"
 
   - variable: readOnlyUser.enabled
@@ -42,13 +42,13 @@ questions:
       type: string
       required: true
       default: "readonly"
-      label: Read Only User Username
+      label: Read Only Username
       description: "Username for the Read Only User"
     - variable: readOnlyUser.password
       type: password
       required: true
       default: "readonly"
-      label: Read Only User Password
+      label: Read Only Password
       description: "Password for the Read Only User"
 
 

@@ -1,0 +1,100 @@
+questions:
+
+  - variable: keycloak.password
+    type: password
+    group: "Keycloak options"
+    label: Admin Password
+    description: "Password for the admin user"
+    required: true
+    default: "admin"
+
+  - variable: database.vendor
+    type: enum
+    options:
+      - "h2"
+      - "postgres"
+      - "mysql"
+      - "mariadb"
+      - "oracle"
+      - "mssql"
+    group: "Database settings"
+    default: "mariadb"
+    label: Database vendor
+    description: Database vendor type
+
+  - variable: database.addr
+    group: "Database settings"
+    type: string
+    label: Database Address
+    description: Address of the database - hostname
+
+  - variable: database.database
+    group: "Database settings"
+    type: string
+    label: Database name
+    description: Name of the database
+    default: "keycloak"
+
+  - variable: database.username
+    group: "Database settings"
+    type: string
+    label: Database username
+    description: Login username for the database
+    default: "keycloak"
+    
+  - variable: database.password
+    group: "Database settings"
+    type: password
+    label: Database password
+    description: Login password for the database
+
+  - variable: ingress.enabled
+    type: boolean
+    label: Expose app using Layer 7 Load Balancer
+    description: "Expose app using Layer 7 Load Balancer - ingress"
+    show_subquestion_if: true
+    default: true
+    group: "Services and Load Balancing"
+    subquestions:
+      - variable: ingress.host
+        type: hostname
+        required: true
+        label: Hostname
+        description: "Hostname to your app installation"
+      
+  - variable: ingress.tls.enabled
+    type: boolean
+    show_if: "ingress.enabled=true"
+    default: true
+    group: "Services and Load Balancing"
+    label: enable TLS on the Layer 7 Load Balancer
+    description: "Enable TLS using certificates on the Layer 7 Load Balancer - ingress"
+    
+  - variable: ingress.tls.clusterIssuer
+    type: string
+    default: ""
+    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"
+    label: Cert Manager Cluster Issuer
+    description: "Cluster-wide certificate issuer to use - leave empty to not use cert-manager"
+    group: "Services and Load Balancing"
+
+  - variable: ingress.tls.secretName
+    type: secret
+    label: TLS Secret Name
+    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"
+    description: "Name of secret which contains the certificate - leave empty to autogenerate"
+    default: ""
+    group: "Services and Load Balancing"
+
+  - variable: service.type
+    required: true
+    default: "ClusterIP"
+    description: "Service Type"
+    type: enum
+    label: Service Type
+    group: "Services and Load Balancing"
+    show_if: "ingress.enabled=false"
+    options:
+      - "ClusterIP"
+      - "NodePort"
+      - "LoadBalancer"

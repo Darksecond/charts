@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "keycloak.labels" . | nindent 4 }}
+  name: {{ include "keycloak.fullname" . }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "keycloak.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "keycloak.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: "jboss/keycloak:{{ .Chart.AppVersion }}"
+        name: keycloak
+        env:
+        - name: KEYCLOAK_USER
+          value: "{{ .Values.keycloak.username }}"
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+        - name: DB_VENDOR
+          value: "{{ .values.database.vendor }}"
+        - name: DB_DATABASE
+          value: "{{ .Values.database.database }}"
+        - name: DB_ADDR
+          value: "{{ .Values.database.addr }}"
+        - name: DB_USER
+          value: "{{ .Values.database.username }}"
+        envFrom:
+        - secretRef:
+            name: {{ include "keycloak.fullname" . }}
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}

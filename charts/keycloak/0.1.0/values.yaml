@@ -1,0 +1,27 @@
+nameOverride: ""
+fullnameOverride: ""
+
+resources: {}
+
+keycloak:
+  username: admin
+  password: admin
+
+database:
+  vendor: mariadb
+  database: keycloak
+  addr: mariadb
+  username: keycloak
+  password: keycloak
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  host: chart-example.local
+  tls:
+    enabled: true
+    clusterIssuer: "letsencrypt-staging"
+    secretName: "keycloak-tls"

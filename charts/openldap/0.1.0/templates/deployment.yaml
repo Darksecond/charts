@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "openldap.labels" . | nindent 4 }}
+  name: {{ include "openldap.fullname" . }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "openldap.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "openldap.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1001
+      containers:
+      - image: "osixia/openldap:{{ .Chart.AppVersion }}"
+        name: openldap
+        env:
+        - name: LDAP_DOMAIN
+          value: "{{ .Values.ldap.domain }}"
+        - name: LDAP_ORGANISATION
+          value: "{{ .Values.ldap.organisation }}"
+        - name: LDAP_READONLY_USER
+          value: "{{ .Values.readOnlyUser.enabled }}"
+        - name: LDAP_READONLY_USER_USERNAME
+          value: "{{ .Values.readOnlyUser.username }}"
+        envFrom:
+        - secretRef:
+            name: {{ include "openldap.fullname" . }}
+        ports:
+        - name: ldap
+          containerPort: 389
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        livenessProbe:
+          tcpSocket:
+            port: ldap
+          initialDelaySeconds: 20
+          periodSeconds: 60
+          failureThreshold: 10
+        readinessProbe:
+          tcpSocket:
+            port: ldap
+          initialDelaySeconds: 20
+          periodSeconds: 60
+          failureThreshold: 10
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/ldap
+          subPath: database
+        - name: data
+          mountPath: /etc/ldap/slapd.d
+          subPath: config
+      volumes:
+      - name: data
+{{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "openldap.fullname" .) }}
+{{- else }}
+        emptyDir: {}
+{{- end -}}

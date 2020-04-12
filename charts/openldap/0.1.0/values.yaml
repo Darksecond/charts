@@ -1,0 +1,33 @@
+nameOverride: ""
+fullnameOverride: ""
+
+ldap:
+  domain: example.com
+  organisation: Example Inc.
+
+adminUser:
+  password: admin
+
+configUser:
+  password: config
+
+readOnlyUser:
+  enabled: true
+  username: readonly
+  password: readonly
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 40Mi
+  limits:
+    cpu: 500m
+    memory: 40Mi
+
+persistence:
+  enabled: false
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  # existingClaim:

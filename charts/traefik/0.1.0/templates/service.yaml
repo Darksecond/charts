@@ -7,8 +7,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: {{ template "traefik.name" . }}
-    release: {{ .Release.Name }}
+    {{- include "traefik.selectorLabels" . | nindent 4 }}
   ports:
   - port: 443
     name: https

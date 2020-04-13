@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "traefik.fullname" . }}
+  labels:
+    {{- include "traefik.labels" . | nindent 4 }}
+data:
+  traefik.toml: |
+    logLevel = "info"
+    InsecureSkipVerify = true
+    defaultEntryPoints = ["http","https"]
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+      compress = true
+      [entryPoints.https]
+      address = ":443"
+      compress = true
+        [entryPoints.https.tls]
+          [[entryPoints.https.tls.certificates]]
+          CertFile = "/ssl/tls.crt"
+          KeyFile = "/ssl/tls.key"
+    [ping]
+    entryPoint = "http"
+    [kubernetes]
+{{- if .Values.ingressClass }}
+    ingressClass = {{ .Values.ingressClass | quote }}
+{{- end }}
+      [kubernetes.ingressEndpoint]
+      publishedService = "{{ .Release.Namespace }}/{{ template "traefik.fullname" . }}"
+    [traefikLog]
+      format = "json"

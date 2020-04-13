@@ -1,0 +1,10 @@
+apiVersion: v2
+name: traefik
+version: 0.1.0
+appVersion: 1.7.20
+description: A Traefik based Kubernetes ingress controller with Let's Encrypt support
+home: https://traefik.io/
+sources:
+- https://github.com/containous/traefik
+- https://github.com/helm/charts/tree/master/stable/traefik
+icon: file://../logo.png

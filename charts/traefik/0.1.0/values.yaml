@@ -1,0 +1,6 @@
+nameOverride: ""
+fullnameOverride: ""
+
+resources: {}
+
+ingressClass: traefik-external

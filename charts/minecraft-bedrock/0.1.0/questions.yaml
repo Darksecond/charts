@@ -1,0 +1,64 @@
+questions:
+
+  - variable: minecraft.serverName
+    type: string
+    default: "Dedicated Server"
+    required: true
+    label: Server Name
+    description: "Used as the server name"
+    group: "Options"
+  - variable: minecraft.difficulty
+    type: enum
+    default: "easy"
+    options:
+      - "peaceful"
+      - "easy"
+      - "normal"
+      - "hard"
+    required: true
+    label: Difficulty
+    description: "Sets the game mode for new players."
+    group: "Options"
+  - variable: minecraft.allowCheats
+    type: boolean
+    default: false
+    label: Allow Cheats
+    description: "If true then cheats like commands can be used."
+    group: "Options"
+  - variable: minecraft.levelName
+    type: string
+    required: true
+    default: "Bedrock level"
+    label: Level Name
+    description: "Name of the Level Folder"
+    group: "Options"
+  - variable: minecraft.levelSeed
+    type: string
+    label: Level Seed
+    description: "Use to randomize the world"
+    group: "Options"
+
+  - variable: persistence.enabled
+    default: false
+    description: "Enable persistence"
+    type: boolean
+    label: Persistence enabled
+    show_subquestion_if: true
+    group: "Storage"
+    subquestions:
+    - variable: persistence.size
+      default: "10Gi"
+      description: "Persistent Volume Size"
+      type: string
+      label: Volume Size
+      required: true
+    - variable: persistence.storageClassName
+      default: ""
+      description: "If undefined or set to null, using the default storageClass. Defaults to null."
+      type: storageclass
+      label: Storage Class
+    - variable: persistence.existingClaim
+      default: ""
+      type: pvc
+      label: Existing Persistent Volume Claim
+      description: "If not empty, uses the specified existing PVC instead of creating new one"

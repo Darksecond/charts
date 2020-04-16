@@ -1,0 +1,19 @@
+nameOverride: ""
+fullnameOverride: ""
+
+minecraft:
+  serverName: Dedicated Server
+  difficulty: easy
+  allowCheats: false
+  levelName: Bedrock level
+  levelSeed: ""
+
+resources: {}
+
+persistence:
+  enabled: false
+  # storageClassName: default
+  accessModes:
+    - ReadWriteOnce
+  size: 2Gi
+  # existingClaim:

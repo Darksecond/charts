@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "minecraft-bedrock.labels" . | nindent 4 }}
+  name: {{ include "minecraft-bedrock.fullname" . }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "minecraft-bedrock.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "minecraft-bedrock.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: "darksecond/minecraft-bedrock:{{ .Chart.AppVersion }}"
+        name: minecraft
+        ports:
+        - containerPort: 19132
+          name: bedrock
+          protocol: UDP
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+          - name: data
+            mountPath: /app/worlds
+            subPath: worlds
+          - name: data
+            mountPath: /app/permissions.json
+            subPath: permissions.json
+          - name: data
+            mountPath: /app/whitelist.json
+            subPath: whitelist.json
+          - name: config
+            mountPath: /app/server.properties
+            subPath: server.properties
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "minecraft-bedrock.fullname" . }}
+      - name: data
+{{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "minecraft-bedrock.fullname" .) }}
+{{- else }}
+        emptyDir: {}
+{{- end -}}

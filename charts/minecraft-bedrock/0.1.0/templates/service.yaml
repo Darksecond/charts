@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "minecraft-bedrock.fullname" . }}
+  labels:
+    {{- include "minecraft-bedrock.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 19132
+      targetPort: bedrock
+      name: bedrock
+      protocol: UDP
+  selector:
+    {{- include "minecraft-bedrock.selectorLabels" . | nindent 4 }}

@@ -31,7 +31,7 @@ questions:
     label: Enable Whitelist
     description: "Enable whitelist"
     group: "Options"
-  - variable: minecraft.whitelist
+  - variable: minecraft.levelName
     type: string
     required: true
     default: "Bedrock level"

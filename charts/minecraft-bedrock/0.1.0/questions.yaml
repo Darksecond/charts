@@ -25,7 +25,13 @@ questions:
     label: Allow Cheats
     description: "If true then cheats like commands can be used."
     group: "Options"
-  - variable: minecraft.levelName
+  - variable: minecraft.whitelist
+    type: boolean
+    default: false
+    label: Enable Whitelist
+    description: "Enable whitelist"
+    group: "Options"
+  - variable: minecraft.whitelist
     type: string
     required: true
     default: "Bedrock level"

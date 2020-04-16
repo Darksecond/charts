@@ -16,6 +16,12 @@ spec:
       labels:
         {{- include "minecraft-bedrock.selectorLabels" . | nindent 8 }}
     spec:
+      initContainers:
+      - name: fillVolume
+        image: darksecond/minecraft-bedrock-init:1
+        volumeMounts:
+          - name: data
+            mountPath: /data
       containers:
       - image: "darksecond/minecraft-bedrock:{{ .Chart.AppVersion }}"
         name: minecraft

@@ -17,7 +17,7 @@ spec:
         {{- include "minecraft-bedrock.selectorLabels" . | nindent 8 }}
     spec:
       initContainers:
-      - name: fillVolume
+      - name: fill-volume
         image: darksecond/minecraft-bedrock-init:1
         volumeMounts:
           - name: data

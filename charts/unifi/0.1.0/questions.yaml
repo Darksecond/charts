@@ -59,7 +59,7 @@ questions:
       type: string
       label: Volume Size
       required: true
-    - variable: persistence.storageClass
+    - variable: persistence.storageClassName
       default: ""
       description: "If undefined or set to null, using the default storageClass. Defaults to null."
       type: storageclass
